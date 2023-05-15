@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/styles">
+        <file>Darkeum.qss</file>
+        <file>dark_teal.qss</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>tab_player_icon.png</file>
+        <file>tab_playlist_icon.png</file>
+        <file>button_pause.png</file>
+        <file>button_prev.png</file>
+        <file>button_next.png</file>
+        <file>button_play.png</file>
+        <file>button_shuffle.png</file>
+        <file>nitrogen.ico</file>
+    </qresource>
+</RCC>
