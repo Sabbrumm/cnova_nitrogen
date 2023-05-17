@@ -65,6 +65,15 @@ private slots:
 
     void do_track_play(QPlaylistTrack* source);
 
+    void do_timing_change(qint64 position);
+
+    void track_end(QMediaPlayer::MediaStatus status);
+    void on_time_slider_sliderPressed();
+
+    void on_time_slider_sliderMoved(int position);
+
+    void on_time_slider_sliderReleased();
+
 private:
     Ui::MainWindow *ui;
 

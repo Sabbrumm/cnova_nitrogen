@@ -149,7 +149,7 @@ height 256 px;</string>
             <item>
              <layout class="QHBoxLayout" name="time_container">
               <item>
-               <widget class="QLabel" name="time_until_label">
+               <widget class="QLabel" name="time_pos_label">
                 <property name="text">
                  <string>0:00</string>
                 </property>
@@ -159,7 +159,7 @@ height 256 px;</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="time_from_label">
+               <widget class="QLabel" name="time_dur_label">
                 <property name="text">
                  <string>-3:40</string>
                 </property>

@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 { 
     ui->setupUi(this);
+    ui->cover_label->setVisible(0);
 //    ui->tr_list->setAcceptDrops(0);
 //    ui->tr_list->setDragDropMode(QAbstractItemView::DragDropMode::InternalMove);
 //    ui->tr_list->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -55,6 +56,8 @@ MainWindow::MainWindow(QWidget *parent)
     output->setDevice(QMediaDevices::defaultAudioOutput());
     player->setAudioOutput(output);
 
+    connect(this->player, SIGNAL(positionChanged(qint64)), this, SLOT(do_timing_change(qint64)));
+    connect(this->player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(track_end(QMediaPlayer::MediaStatus)));
 
 
 }
@@ -141,6 +144,7 @@ void MainWindow::on_tr_list_itemDoubleClicked(QListWidgetItem *item)
             ui->tr_list->play_current();
             break;
         case QPlaylistItemWidget::Stopped:
+            player_stop();
             ui->tr_list->play_track_by_index(ui->tr_list->row(item));
     }
 }
@@ -202,12 +206,14 @@ void MainWindow::on_shuffle_button_clicked()
 
 void MainWindow::on_next_button_clicked()
 {
+    player_stop();
     ui->tr_list->next();
 }
 
 
 void MainWindow::on_previous_button_clicked()
 {
+    player_stop();
     ui->tr_list->previous();
 }
 
@@ -236,16 +242,23 @@ void MainWindow::set_metadata(QPlaylistTrack *source)
 {
     ui->artist_label->setText("");
     ui->trackname_label->setText(source->getWidget()->title());
+    ui->time_slider->setEnabled(1);
 }
 
 void MainWindow::set_default_metadata()
 {
     ui->artist_label->setText("Абсолютная тишина");
     ui->trackname_label->setText("Ничего не играет");
+    ui->time_dur_label->setText("");
+    ui->time_pos_label->setText("");
+    ui->time_slider->setEnabled(0);
 }
 
 void MainWindow::player_stop(){
     player->stop();
+    player->setSource(QUrl(""));
+
+
 }
 void MainWindow::player_start(QString filepath){
     player->setSource(QUrl::fromLocalFile(filepath));
@@ -283,6 +296,33 @@ void MainWindow::do_track_play(QPlaylistTrack* source){
     set_metadata(source);
 }
 
+void MainWindow::do_timing_change(qint64 position)
+{
+    qint64 dur = this->player->duration();
+
+
+    QString dur_s = QDateTime::fromMSecsSinceEpoch(dur).toString("mm:ss");
+    QString pos_s = QDateTime::fromMSecsSinceEpoch(position).toString("mm:ss");
+
+    ui->time_dur_label->setText(dur_s);
+    ui->time_pos_label->setText(pos_s);
+
+    ui->time_slider->setMinimum(0);
+    ui->time_slider->setMaximum(dur);
+    ui->time_slider->setSliderPosition(position);
+
+
+
+}
+
+void MainWindow::track_end(QMediaPlayer::MediaStatus status)
+{
+    if (status==QMediaPlayer::EndOfMedia){
+        player_stop();
+        do_track_stop();
+    }
+}
+
 void MainWindow::do_track_stop()
 {
     if (player->hasAudio()){
@@ -291,5 +331,31 @@ void MainWindow::do_track_stop()
     qDebug() << "ничего не играет";
     set_play_icon();
     set_default_metadata();
+}
+
+
+void MainWindow::on_time_slider_sliderPressed()
+{
+    if (ui->tr_list->currentPlaying())
+        player->pause();
+}
+
+
+void MainWindow::on_time_slider_sliderMoved(int position)
+{
+    qint64 dur = ui->time_slider->maximum();
+    QString dur_s = QDateTime::fromMSecsSinceEpoch(dur).toString("mm:ss");
+    QString pos_s = QDateTime::fromMSecsSinceEpoch(position).toString("mm:ss");
+    this->player->setPosition(position);
+    ui->time_dur_label->setText(dur_s);
+    ui->time_pos_label->setText(pos_s);
+}
+
+
+void MainWindow::on_time_slider_sliderReleased()
+{
+    if (ui->tr_list->currentPlaying())
+        if (ui->tr_list->currentPlaying()->getWidget()->trackState() == QPlaylistItemWidget::Playing)
+            player->play();
 }
 
