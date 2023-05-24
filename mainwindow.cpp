@@ -9,6 +9,7 @@
 #include <QAudioOutput>
 #include <QAudioDevice>
 #include <QAudioOutput>
+#include <LiquidEqualizerWidget.h>
 
 void MainWindow::set_play_icon()
 {
@@ -39,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 { 
     ui->setupUi(this);
-    ui->cover_label->setVisible(0);
+    //ui->cover_label->setVisible(0);
 //    ui->tr_list->setAcceptDrops(0);
 //    ui->tr_list->setDragDropMode(QAbstractItemView::DragDropMode::InternalMove);
 //    ui->tr_list->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -55,6 +56,13 @@ MainWindow::MainWindow(QWidget *parent)
     QAudioOutput* output = new QAudioOutput();
     output->setDevice(QMediaDevices::defaultAudioOutput());
     player->setAudioOutput(output);
+
+    ui->eq_widget->setEnabled(0);
+    ui->eq_widget->setBands(QVector<double>(std::initializer_list<double>({1.0,2.0,10.0,0.0,0.0,0.0,0.0})));
+
+    //Inherit accent color from palette
+    ui->eq_widget->setAccentColor(ui->eq_widget->palette().dark().color());
+    ui->eq_widget->setGridVisible(false);
 
     connect(this->player, SIGNAL(positionChanged(qint64)), this, SLOT(do_timing_change(qint64)));
     connect(this->player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(track_end(QMediaPlayer::MediaStatus)));

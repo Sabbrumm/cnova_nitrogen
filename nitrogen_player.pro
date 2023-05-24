@@ -10,6 +10,9 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    3rdparty/JdspImpResToolbox.cpp \
+    3rdparty/interpolation.cpp \
+    LiquidEqualizerWidget.cpp \
     main.cpp \
     mainwindow.cpp \
     qplaylist.cpp \
@@ -17,6 +20,10 @@ SOURCES += \
     qplaylisttrack.cpp
 
 HEADERS += \
+    3rdparty/JdspImpResToolbox.h \
+    3rdparty/interpolation.h \
+    EqConfig.h \
+    LiquidEqualizerWidget.h \
     mainwindow.h \
     qplaylist.h \
     qplaylistitemwidget.h \
@@ -37,6 +44,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    3rdparty/LICENSE \
     resources/Darkeum.qss \
     resources/dark_teal.qss \
     resources/icons/pause.png \
