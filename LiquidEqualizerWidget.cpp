@@ -331,15 +331,15 @@ void LiquidEqualizerWidget::paintEvent(QPaintEvent *event)
 			mControlBarKnob.end();
 		}
 
-        //mControlBarText.begin(this);
+//        mControlBarText.begin(this);
 
-        //QFont font = mControlBarText.font();
-        //font.setPointSize(8);
+//        QFont font = mControlBarText.font();
+//        font.setPointSize(8);
 
-        //mControlBarText.setFont(font);
-        //mControlBarText.drawText(x, 19,              gainText);
-        //mControlBarText.drawText(x, mHeight - 16.0f, frequencyText);
-        //mControlBarText.end();
+//        mControlBarText.setFont(font);
+//        mControlBarText.drawText(x, 19,              gainText);
+//        mControlBarText.drawText(x, mHeight - 16.0f, frequencyText);
+//        mControlBarText.end();
 	}
 }
 

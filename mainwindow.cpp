@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     player->setAudioOutput(output);
 
     ui->eq_widget->setEnabled(0);
-    ui->eq_widget->setBands(QVector<double>(std::initializer_list<double>({1.0,2.0,10.0,0.0,0.0,0.0,0.0})));
+    ui->eq_widget->setBands(QVector<double>(std::initializer_list<double>({0.0,0.0})));
 
     //Inherit accent color from palette
     ui->eq_widget->setAccentColor(ui->eq_widget->palette().dark().color());
