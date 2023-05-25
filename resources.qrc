@@ -12,5 +12,11 @@
         <file>button_play.png</file>
         <file>button_shuffle.png</file>
         <file>nitrogen.ico</file>
+        <file>button_repeat_off.png</file>
+        <file>button_repeat_on.png</file>
+        <file>button_playlist_add.png</file>
+        <file>button_playlist_done.png</file>
+        <file>button_playlist_edit.png</file>
+        <file>button_shuffle_off.png</file>
     </qresource>
 </RCC>

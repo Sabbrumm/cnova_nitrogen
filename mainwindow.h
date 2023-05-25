@@ -7,7 +7,10 @@
 #include <QListWidgetItem>
 #include "qplaylistitemwidget.h"
 #include "qplaylisttrack.h"
-
+#include <QAudioInput>
+#include <QAudioOutput>
+#include <QTimer>
+#include "qplaylist.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +20,18 @@ class MainWindow : public QMainWindow
 
 {
     Q_OBJECT
+
+
+    bool do_repeat=0;
+    QPlaylist* saved_playlist=nullptr;
+
+
+    QAudioOutput* output;
+    QTimer* eq_timer;
+
+
+
+
     void set_play_icon();
     void set_pause_icon();
     void set_metadata(QPlaylistTrack* source);
@@ -26,8 +41,11 @@ class MainWindow : public QMainWindow
     void player_pause();
     void player_play();
 
+
+
     QStringList ask_for_tracks();
     QString ask_for_playlist();
+    QString ask_for_saving_playlist();
 
 
 public:
@@ -73,6 +91,24 @@ private slots:
     void on_time_slider_sliderMoved(int position);
 
     void on_time_slider_sliderReleased();
+
+    void eq_randomize();
+
+    void eq_normalize();
+
+    void player_error(QMediaPlayer::Error err, QString what);
+
+    void on_open_file_act_triggered();
+
+    void on_repeat_clicked();
+
+    void save_current_playlist();
+
+    void open_playlist();
+
+    void on_save_playlist_act_triggered();
+
+    void on_open_playlist_act_triggered();
 
 private:
     Ui::MainWindow *ui;

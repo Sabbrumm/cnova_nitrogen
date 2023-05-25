@@ -110,6 +110,13 @@ void QPlaylist::edit_done()
     this->now_editing = 0;
 }
 
+void QPlaylist::clear_tracks()
+{
+    for (int i = this->count()-1; i>=0; i--){
+        exclude_track_by_index(i);
+    }
+}
+
 void QPlaylist::play_current()
 {
     this->currentPlaying()->getWidget()->play();

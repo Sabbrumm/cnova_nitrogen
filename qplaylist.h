@@ -31,13 +31,16 @@ public:
     void edit_done();
     bool isEditing(){return now_editing;}
 
+    void clear_tracks();
     void play_current();
     void pause_current();
 
     void start_playing();
 
     QPlaylistTrack* currentPlaying(){return _currentPlaying;}
-
+    void setCurrentPlaying(QPlaylistTrack* tr){
+        _currentPlaying = tr;
+    }
 
 protected:
     void dragMoveEvent(QDragMoveEvent *event);
